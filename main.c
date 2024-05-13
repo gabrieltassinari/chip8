@@ -4,7 +4,6 @@
 #include <raylib.h>
 
 #include "chip8.h"
-#include "stack.h"
 
 int main() {
 	uint16_t opcode;

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void push(stack **top, int value)
+void push(stack **top, uint16_t value)
 {
 	stack *tmp;
 
@@ -16,19 +16,24 @@ void push(stack **top, int value)
 	*top = tmp;
 }
 
-void pop(stack **top)
+uint16_t pop(stack **top)
 {
-	if (*top == NULL) {
-		printf("ERROR: Empty stack.\n");
-		return;
-	}
-
+	uint16_t value;
 	stack *tmp;
 
+	if (*top == NULL) {
+		printf("ERROR: The stack is empty.\n");
+		return 0;
+	}
+
 	tmp = *top;
+	value = tmp->value;
+
 	*top = (*top)->next;
 
 	free(tmp);
+
+	return value;
 }
 
 void show(stack *top)

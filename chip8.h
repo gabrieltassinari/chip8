@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "stack.h"
 
 #define HEIGHT 32
 #define WIDTH 64
@@ -16,7 +17,7 @@ typedef struct chip8 {
 	uint16_t I;
 
 	// Stack
-	uint16_t stack[4];
+	stack *stack;
 
 	// {Delay,Sound} Timer
 	uint8_t DT;
@@ -35,6 +36,7 @@ void draw_scr(chip8 *c);
 void op_00E0(chip8 *c);
 void op_00EE(chip8 *c);
 void op_1NNN(chip8 *c, uint16_t NNN);
+void op_2NNN(chip8 *c, uint16_t NNN);
 void op_6XNN(chip8 *c, uint16_t NN, uint16_t X);
 void op_7XNN(chip8 *c, uint16_t NN, uint16_t X);
 void op_ANNN(chip8 *c, uint16_t NNN);

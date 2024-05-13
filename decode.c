@@ -23,6 +23,9 @@ void decode(chip8 *c, uint16_t opcode)
 			op_00EE(c);
 			break;
 		}
+	case 0x2000:
+		op_2NNN(c, NNN);
+		break;
 	case 0x1000:
 		op_1NNN(c, NNN);
 		break;
@@ -53,11 +56,17 @@ void op_00E0(chip8 *c)
 
 void op_00EE(chip8 *c)
 {
-	// TODO: Implement a stack.
+	c->PC = pop(&c->stack);
 }
 
 void op_1NNN(chip8 *c, uint16_t NNN)
 {
+	c->PC = NNN;
+}
+
+void op_2NNN(chip8 *c, uint16_t NNN)
+{
+	push(&c->stack, c->PC);
 	c->PC = NNN;
 }
 
