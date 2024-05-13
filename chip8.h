@@ -30,3 +30,11 @@ uint16_t fetch(chip8 *c);
 void decode(chip8 *c, uint16_t opcode);
 int load_rom(chip8 *c, const char *path);
 void draw_scr(chip8 *c);
+
+// Opcodes
+void op_00E0(chip8 *c);
+void op_1NNN(chip8 *c, uint16_t NNN);
+void op_6XNN(chip8 *c, uint16_t NN, uint16_t X);
+void op_7XNN(chip8 *c, uint16_t NN, uint16_t X);
+void op_ANNN(chip8 *c, uint16_t NNN);
+void op_DXYN(chip8 *c, uint16_t N, uint16_t X, uint16_t Y);
