@@ -3,9 +3,8 @@
 
 void decode(chip8 *c, uint16_t opcode)
 {
-	uint16_t X, Y, N, NN, NNN, op;
+	uint16_t X, Y, N, NN, NNN;
 
-	op = (opcode & 0xF000) >> 12;
 	X = (opcode & 0x0F00) >> 8;
 	Y = (opcode & 0x00F0) >> 4;
 
@@ -13,24 +12,32 @@ void decode(chip8 *c, uint16_t opcode)
 	NN = (opcode & 0x00FF);
 	NNN = (X << 8) | NN;
 
-	switch (op) {
-	case 0:
-		op_00E0(c);
-		break;
-	case 1:
+
+	switch (opcode & 0xF000) {
+	case 0x0000:
+		switch (opcode & 0x00FF) {
+		case 0X00E0:
+			op_00E0(c);
+			break;
+		case 0x00EE:
+			op_00EE(c);
+			break;
+		}
+	case 0x1000:
 		op_1NNN(c, NNN);
 		break;
-	case 6:
+	case 0x6000:
 		op_6XNN(c, NN, X);
 		break;
-	case 7:
+	case 0x7000:
 		op_7XNN(c, NN, X);
 		break;
-	case A:
+	case 0xA000:
 		op_ANNN(c, NNN);
 		break;
-	case D:
+	case 0xD000:
 		op_DXYN(c, N, X, Y);
+		break;
 	default:
 		printf("ERROR: Opcode %#x not implemented.\n", opcode);
 	}
@@ -42,6 +49,11 @@ void op_00E0(chip8 *c)
 		for (int x = 0; x < WIDTH; x++)
 			c->scr[y][x] = 0;
 
+}
+
+void op_00EE(chip8 *c)
+{
+	// TODO: Implement a stack.
 }
 
 void op_1NNN(chip8 *c, uint16_t NNN)

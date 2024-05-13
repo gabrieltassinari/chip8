@@ -33,6 +33,7 @@ void draw_scr(chip8 *c);
 
 // Opcodes
 void op_00E0(chip8 *c);
+void op_00EE(chip8 *c);
 void op_1NNN(chip8 *c, uint16_t NNN);
 void op_6XNN(chip8 *c, uint16_t NN, uint16_t X);
 void op_7XNN(chip8 *c, uint16_t NN, uint16_t X);
