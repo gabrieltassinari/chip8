@@ -23,17 +23,29 @@ void decode(chip8 *c, uint16_t opcode)
 			op_00EE(c);
 			break;
 		}
+	case 0x1000:
+		op_1NNN(c, NNN);
+		break;
 	case 0x2000:
 		op_2NNN(c, NNN);
 		break;
-	case 0x1000:
-		op_1NNN(c, NNN);
+	case 0x3000:
+		op_3XNN(c, NN, X);
+		break;
+	case 0x4000:
+		op_4XNN(c, NN, X);
+		break;
+	case 0x5000:
+		op_5XY0(c, X, Y);
 		break;
 	case 0x6000:
 		op_6XNN(c, NN, X);
 		break;
 	case 0x7000:
 		op_7XNN(c, NN, X);
+		break;
+	case 0x9000:
+		op_9XY0(c, X, Y);
 		break;
 	case 0xA000:
 		op_ANNN(c, NNN);
@@ -70,6 +82,24 @@ void op_2NNN(chip8 *c, uint16_t NNN)
 	c->PC = NNN;
 }
 
+void op_3XNN(chip8 *c, uint16_t NN, uint16_t X)
+{
+	if (c->V[X] == NN)
+		c->PC += 2;
+}
+
+void op_4XNN(chip8 *c, uint16_t NN, uint16_t X)
+{
+	if (c->V[X] != NN)
+		c->PC += 2;
+}
+
+void op_5XY0(chip8 *c, uint16_t X, uint16_t Y)
+{
+	if (c->V[X] == c->V[Y])
+		c->PC += 2;
+}
+
 void op_6XNN(chip8 *c, uint16_t NN, uint16_t X)
 {
 	c->V[X] = NN;
@@ -78,6 +108,12 @@ void op_6XNN(chip8 *c, uint16_t NN, uint16_t X)
 void op_7XNN(chip8 *c, uint16_t NN, uint16_t X)
 {
 	c->V[X] += NN;
+}
+
+void op_9XY0(chip8 *c, uint16_t X, uint16_t Y)
+{
+	if (c->V[X] != c->V[Y])
+		c->PC += 2;
 }
 
 void op_ANNN(chip8 *c, uint16_t NNN)
