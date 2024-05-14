@@ -1,4 +1,4 @@
-OBJ=main.o decode.o stack.o
+OBJ=main.o decode.o stack.o chip8.o
 
 all: $(OBJ)
 	$(CC) $(OBJ) -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -o chip8
