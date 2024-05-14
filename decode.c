@@ -173,32 +173,40 @@ void op_8XY4(chip8 *c, uint16_t X, uint16_t Y)
 
 void op_8XY5(chip8 *c, uint16_t X, uint16_t Y)
 {
+	c->V[X] = c->V[X] - c->V[Y];
+
 	if (c->V[X] > c->V[Y])
 		c->V[F] = 1;
 	else
 		c->V[F] = 0;
-
-	c->V[X] = c->V[X] - c->V[Y];
 }
 
 void op_8XY6(chip8 *c, uint16_t X, uint16_t Y)
 {
-	// TODO
+	if (c->cosmac_vip)
+		c->V[X] = c->V[Y];
+
+	c->V[F] = c->V[X] & 0x01;
+	c->V[X] = c->V[X] >> 1;
 }
 
 void op_8XY7(chip8 *c, uint16_t X, uint16_t Y)
 {
+	c->V[X] = c->V[Y] - c->V[X];
+
 	if (c->V[Y] > c->V[X])
 		c->V[F] = 1;
 	else
 		c->V[F] = 0;
-
-	c->V[X] = c->V[Y] - c->V[X];
 }
 
 void op_8XYE(chip8 *c, uint16_t X, uint16_t Y)
 {
-	// TODO
+	if (c->cosmac_vip)
+		c->V[X] = c->V[Y];
+
+	c->V[F] = (c->V[X] & 0x80) >> 7;
+	c->V[X] = c->V[X] << 1;
 }
 
 void op_9XY0(chip8 *c, uint16_t X, uint16_t Y)

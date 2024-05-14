@@ -25,6 +25,9 @@ typedef struct chip8 {
 
 	// Variable registers
 	uint8_t V[16];
+
+	// COSMAC VIP/Super-chip option
+	int cosmac_vip;
 } chip8;
 
 uint16_t fetch(chip8 *c);
