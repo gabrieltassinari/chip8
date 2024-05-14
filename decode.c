@@ -44,6 +44,36 @@ void decode(chip8 *c, uint16_t opcode)
 	case 0x7000:
 		op_7XNN(c, NN, X);
 		break;
+	case 0x8000:
+		switch (opcode & 0x000F) {
+		case 0x0000:
+			op_8XY0(c, X, Y);
+			break;
+		case 0x0001:
+			op_8XY1(c, X, Y);
+			break;
+		case 0x0002:
+			op_8XY2(c, X, Y);
+			break;
+		case 0x0003:
+			op_8XY3(c, X, Y);
+			break;
+		case 0x0004:
+			op_8XY4(c, X, Y);
+			break;
+		case 0x0005:
+			op_8XY5(c, X, Y);
+			break;
+		case 0x0006:
+			op_8XY6(c, X, Y);
+			break;
+		case 0x0007:
+			op_8XY7(c, X, Y);
+			break;
+		case 0x000E:
+			op_8XYE(c, X, Y);
+			break;
+		}
 	case 0x9000:
 		op_9XY0(c, X, Y);
 		break;
@@ -60,9 +90,10 @@ void decode(chip8 *c, uint16_t opcode)
 
 void op_00E0(chip8 *c)
 {
-	for (int y = 0; y < HEIGHT; y++)
+	for (int y = 0; y < HEIGHT; y++) {
 		for (int x = 0; x < WIDTH; x++)
 			c->scr[y][x] = 0;
+	}
 
 }
 
@@ -108,6 +139,66 @@ void op_6XNN(chip8 *c, uint16_t NN, uint16_t X)
 void op_7XNN(chip8 *c, uint16_t NN, uint16_t X)
 {
 	c->V[X] += NN;
+}
+
+void op_8XY0(chip8 *c, uint16_t X, uint16_t Y)
+{
+	c->V[X] = c->V[Y];
+}
+
+void op_8XY1(chip8 *c, uint16_t X, uint16_t Y)
+{
+	c->V[X] = c->V[X] | c->V[Y];
+}
+
+void op_8XY2(chip8 *c, uint16_t X, uint16_t Y)
+{
+	c->V[X] = c->V[X] & c->V[Y];
+}
+
+void op_8XY3(chip8 *c, uint16_t X, uint16_t Y)
+{
+	c->V[X] = c->V[X] ^ c->V[Y];
+}
+
+void op_8XY4(chip8 *c, uint16_t X, uint16_t Y)
+{
+	c->V[X] = c->V[X] + c->V[Y];
+
+	if (c->V[X] + c->V[Y] > 255)
+		c->V[F] = 1;
+	else
+		c->V[F] = 0;
+}
+
+void op_8XY5(chip8 *c, uint16_t X, uint16_t Y)
+{
+	if (c->V[X] > c->V[Y])
+		c->V[F] = 1;
+	else
+		c->V[F] = 0;
+
+	c->V[X] = c->V[X] - c->V[Y];
+}
+
+void op_8XY6(chip8 *c, uint16_t X, uint16_t Y)
+{
+	// TODO
+}
+
+void op_8XY7(chip8 *c, uint16_t X, uint16_t Y)
+{
+	if (c->V[Y] > c->V[X])
+		c->V[F] = 1;
+	else
+		c->V[F] = 0;
+
+	c->V[X] = c->V[Y] - c->V[X];
+}
+
+void op_8XYE(chip8 *c, uint16_t X, uint16_t Y)
+{
+	// TODO
 }
 
 void op_9XY0(chip8 *c, uint16_t X, uint16_t Y)

@@ -24,7 +24,7 @@ typedef struct chip8 {
 	uint8_t ST;
 
 	// Variable registers
-	uint16_t V[16];
+	uint8_t V[16];
 } chip8;
 
 uint16_t fetch(chip8 *c);
@@ -42,6 +42,15 @@ void op_4XNN(chip8 *c, uint16_t NN, uint16_t X);
 void op_5XY0(chip8 *c, uint16_t X, uint16_t Y);
 void op_6XNN(chip8 *c, uint16_t NN, uint16_t X);
 void op_7XNN(chip8 *c, uint16_t NN, uint16_t X);
+void op_8XY0(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY1(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY2(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY3(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY4(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY5(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY6(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XY7(chip8 *c, uint16_t X, uint16_t Y);
+void op_8XYE(chip8 *c, uint16_t X, uint16_t Y);
 void op_9XY0(chip8 *c, uint16_t X, uint16_t Y);
 void op_ANNN(chip8 *c, uint16_t NNN);
 void op_DXYN(chip8 *c, uint16_t N, uint16_t X, uint16_t Y);
