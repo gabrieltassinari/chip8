@@ -18,10 +18,10 @@ void decode(chip8 *c, uint16_t opcode)
 		switch (opcode & 0x00FF) {
 		case 0X00E0:
 			op_00E0(c);
-			break;
+			return;
 		case 0x00EE:
 			op_00EE(c);
-			break;
+			return;
 		}
 	case 0x1000:
 		op_1NNN(c, NNN);
@@ -48,31 +48,31 @@ void decode(chip8 *c, uint16_t opcode)
 		switch (opcode & 0x000F) {
 		case 0x0000:
 			op_8XY0(c, X, Y);
-			break;
+			return;
 		case 0x0001:
 			op_8XY1(c, X, Y);
-			break;
+			return;
 		case 0x0002:
 			op_8XY2(c, X, Y);
-			break;
+			return;
 		case 0x0003:
 			op_8XY3(c, X, Y);
-			break;
+			return;
 		case 0x0004:
 			op_8XY4(c, X, Y);
-			break;
+			return;
 		case 0x0005:
 			op_8XY5(c, X, Y);
-			break;
+			return;
 		case 0x0006:
 			op_8XY6(c, X, Y);
-			break;
+			return;
 		case 0x0007:
 			op_8XY7(c, X, Y);
-			break;
+			return;
 		case 0x000E:
 			op_8XYE(c, X, Y);
-			break;
+			return;
 		}
 	case 0x9000:
 		op_9XY0(c, X, Y);
