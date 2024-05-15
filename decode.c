@@ -31,19 +31,19 @@ void decode(chip8 *c, uint16_t opcode)
 		op_2NNN(c, NNN);
 		break;
 	case 0x3000:
-		op_3XNN(c, NN, X);
+		op_3XNN(c, X, NN);
 		break;
 	case 0x4000:
-		op_4XNN(c, NN, X);
+		op_4XNN(c, X, NN);
 		break;
 	case 0x5000:
 		op_5XY0(c, X, Y);
 		break;
 	case 0x6000:
-		op_6XNN(c, NN, X);
+		op_6XNN(c, X, NN);
 		break;
 	case 0x7000:
-		op_7XNN(c, NN, X);
+		op_7XNN(c, X, NN);
 		break;
 	case 0x8000:
 		switch (opcode & 0x000F) {
@@ -82,13 +82,13 @@ void decode(chip8 *c, uint16_t opcode)
 		op_ANNN(c, NNN);
 		break;
 	case 0xB000:
-		op_BNNN(c, NNN, X);
+		op_BNNN(c, X, NNN);
 		break;
 	case 0xC000:
-		op_CXNN(c, NN, X);
+		op_CXNN(c, X, NN);
 		break;
 	case 0xD000:
-		op_DXYN(c, N, X, Y);
+		op_DXYN(c, X, Y, N);
 		break;
 	default:
 		printf("ERROR: Opcode %#x not implemented.\n", opcode);
@@ -120,13 +120,13 @@ void op_2NNN(chip8 *c, uint16_t NNN)
 	c->PC = NNN;
 }
 
-void op_3XNN(chip8 *c, uint16_t NN, uint16_t X)
+void op_3XNN(chip8 *c, uint16_t X, uint16_t NN)
 {
 	if (c->V[X] == NN)
 		c->PC += 2;
 }
 
-void op_4XNN(chip8 *c, uint16_t NN, uint16_t X)
+void op_4XNN(chip8 *c, uint16_t X, uint16_t NN)
 {
 	if (c->V[X] != NN)
 		c->PC += 2;
@@ -138,12 +138,12 @@ void op_5XY0(chip8 *c, uint16_t X, uint16_t Y)
 		c->PC += 2;
 }
 
-void op_6XNN(chip8 *c, uint16_t NN, uint16_t X)
+void op_6XNN(chip8 *c, uint16_t X, uint16_t NN)
 {
 	c->V[X] = NN;
 }
 
-void op_7XNN(chip8 *c, uint16_t NN, uint16_t X)
+void op_7XNN(chip8 *c, uint16_t X, uint16_t NN)
 {
 	c->V[X] += NN;
 }
@@ -227,7 +227,7 @@ void op_ANNN(chip8 *c, uint16_t NNN)
 	c->I = NNN;
 }
 
-void op_BNNN(chip8 *c, uint16_t NNN, uint16_t X)
+void op_BNNN(chip8 *c, uint16_t X, uint16_t NNN)
 {
 	if (c->cosmac_vip)
 		c->PC = c->mem[NNN] + c->V[0];
@@ -235,7 +235,7 @@ void op_BNNN(chip8 *c, uint16_t NNN, uint16_t X)
 		c->PC = c->mem[NNN] + c->V[X];
 }
 
-void op_CXNN(chip8 *c, uint16_t NN, uint16_t X)
+void op_CXNN(chip8 *c, uint16_t X, uint16_t NN)
 {
 	uint16_t n_random;
 
@@ -244,7 +244,7 @@ void op_CXNN(chip8 *c, uint16_t NN, uint16_t X)
 	c->V[X] = n_random & NN;
 }
 
-void op_DXYN(chip8 *c, uint16_t N, uint16_t X, uint16_t Y)
+void op_DXYN(chip8 *c, uint16_t X, uint16_t Y, uint16_t N)
 {
 	uint16_t xcord, ycord, sprite, bit;
 
