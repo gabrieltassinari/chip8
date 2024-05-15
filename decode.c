@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "chip8.h"
 
 void decode(chip8 *c, uint16_t opcode)
@@ -79,6 +80,12 @@ void decode(chip8 *c, uint16_t opcode)
 		break;
 	case 0xA000:
 		op_ANNN(c, NNN);
+		break;
+	case 0xB000:
+		op_BNNN(c, NNN, X);
+		break;
+	case 0xC000:
+		op_CXNN(c, NN, X);
 		break;
 	case 0xD000:
 		op_DXYN(c, N, X, Y);
@@ -218,6 +225,23 @@ void op_9XY0(chip8 *c, uint16_t X, uint16_t Y)
 void op_ANNN(chip8 *c, uint16_t NNN)
 {
 	c->I = NNN;
+}
+
+void op_BNNN(chip8 *c, uint16_t NNN, uint16_t X)
+{
+	if (c->cosmac_vip)
+		c->PC = c->mem[NNN] + c->V[0];
+	else
+		c->PC = c->mem[NNN] + c->V[X];
+}
+
+void op_CXNN(chip8 *c, uint16_t NN, uint16_t X)
+{
+	uint16_t n_random;
+
+	n_random = rand() % 256;
+
+	c->V[X] = n_random & NN;
 }
 
 void op_DXYN(chip8 *c, uint16_t N, uint16_t X, uint16_t Y)

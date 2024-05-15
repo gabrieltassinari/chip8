@@ -1,3 +1,4 @@
+#include <time.h>
 #include <stdlib.h>
 #include <raylib.h>
 
@@ -8,6 +9,8 @@ int main() {
 	chip8 *c;
 
 	c = malloc(sizeof (chip8));
+
+	srand(time(NULL));
 
 	// Load ROM
 	load_rom(c, "./roms/ibm.ch8");

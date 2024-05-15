@@ -56,4 +56,6 @@ void op_8XY7(chip8 *c, uint16_t X, uint16_t Y);
 void op_8XYE(chip8 *c, uint16_t X, uint16_t Y);
 void op_9XY0(chip8 *c, uint16_t X, uint16_t Y);
 void op_ANNN(chip8 *c, uint16_t NNN);
+void op_BNNN(chip8 *c, uint16_t NNN, uint16_t X);
+void op_CXNN(chip8 *c, uint16_t NN, uint16_t X);
 void op_DXYN(chip8 *c, uint16_t N, uint16_t X, uint16_t Y);
