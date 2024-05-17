@@ -20,6 +20,8 @@ void draw_scr(chip8 *c)
 int load_rom(chip8 *c, const char *path)
 {
 	FILE *fp;
+	int file_size;
+
 	uint8_t font[80] = {
 		0xFA, 0xBE, 0x90, 0x90, 0xF0, // 0
 		0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -44,13 +46,18 @@ int load_rom(chip8 *c, const char *path)
 	// Map ROM/font to memory
 	fp = fopen(path, "r+");
 
+	// Get ROM size
+	fseek(fp, 0L, SEEK_END);
+	file_size = ftell(fp);
+	rewind(fp);
+
 	if (fp == NULL) {
 		printf("ERROR: ROM not found.");
 		exit(1);
 	}
 
 	// TODO: Fix hardcoded length of opcodes
-	for (int i = 0; i < 133; i++)
+	for (int i = 0; i < file_size; i++)
 		c->mem[512+i] = getc(fp);
 	c->PC = 512;
 
