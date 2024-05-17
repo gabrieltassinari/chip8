@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <raylib.h>
+
 #include "chip8.h"
 
 void decode(chip8 *c, uint16_t opcode)
@@ -90,6 +92,15 @@ void decode(chip8 *c, uint16_t opcode)
 	case 0xD000:
 		op_DXYN(c, X, Y, N);
 		break;
+	case 0xE000:
+		switch (opcode & 0x00FF) {
+		case 0x009E:
+			op_EX9E(c, X);
+			return;
+		case 0x00A1:
+			op_EXA1(c, X);
+			return;
+		}
 	default:
 		printf("ERROR: Opcode %#x not implemented.\n", opcode);
 	}
@@ -271,4 +282,16 @@ void op_DXYN(chip8 *c, uint16_t X, uint16_t Y, uint16_t N)
 
 		if (++ycord > 31) return;
 	}
+}
+
+void op_EX9E(chip8 *c, uint16_t X)
+{
+	if (IsKeyPressed(c->keypad[c->V[X]]))
+		c->PC += 2;
+}
+
+void op_EXA1(chip8 *c, uint16_t X)
+{
+	if (!IsKeyPressed(c->keypad[c->V[X]]))
+		c->PC += 2;
 }

@@ -26,6 +26,9 @@ typedef struct chip8 {
 	// Variable registers
 	uint8_t V[16];
 
+	// Keypad
+	uint8_t keypad[16];
+
 	// COSMAC VIP/Super-chip option
 	int cosmac_vip;
 } chip8;
@@ -59,3 +62,5 @@ void op_ANNN(chip8 *c, uint16_t NNN);
 void op_BNNN(chip8 *c, uint16_t X, uint16_t NNN);
 void op_CXNN(chip8 *c, uint16_t X, uint16_t NN);
 void op_DXYN(chip8 *c, uint16_t X, uint16_t Y, uint16_t N);
+void op_EX9E(chip8 *c, uint16_t X);
+void op_EXA1(chip8 *c, uint16_t X);
