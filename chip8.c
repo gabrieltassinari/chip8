@@ -41,7 +41,15 @@ int load_rom(chip8 *c, const char *path)
 		0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 	};
 
+	uint8_t keypad[16] = {
+		KEY_ONE, KEY_TWO, KEY_THREE, KEY_C,
+		KEY_FOUR, KEY_FIVE, KEY_SIX, KEY_D,
+		KEY_SEVEN, KEY_EIGHT, KEY_NINE, KEY_E,
+		KEY_A, KEY_ZERO, KEY_B, KEY_F
+	};
+
 	memcpy(c->mem, font, 80);
+	memcpy(c->keypad, keypad, 16);
 
 	// Map ROM/font to memory
 	fp = fopen(path, "r+");
