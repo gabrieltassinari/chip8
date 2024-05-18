@@ -101,6 +101,18 @@ void decode(chip8 *c, uint16_t opcode)
 			op_EXA1(c, X);
 			return;
 		}
+	case 0xF000:
+		switch (opcode & 0x00FF) {
+		case 0x0007:
+			op_FX07(c, X);
+			return;
+		case 0x0015:
+			op_FX15(c, X);
+			return;
+		case 0x0018:
+			op_FX18(c, X);
+			return;
+		}
 	default:
 		printf("ERROR: Opcode %#x not implemented.\n", opcode);
 	}
@@ -294,4 +306,19 @@ void op_EXA1(chip8 *c, uint16_t X)
 {
 	if (!IsKeyPressed(c->keypad[c->V[X]]))
 		c->PC += 2;
+}
+
+void op_FX07(chip8 *c, uint16_t X)
+{
+	c->V[X] = c->DT;
+}
+
+void op_FX15(chip8 *c, uint16_t X)
+{
+	c->DT = c->V[X];
+}
+
+void op_FX18(chip8 *c, uint16_t X)
+{
+	c->ST = c->V[X];
 }

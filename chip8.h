@@ -64,3 +64,6 @@ void op_CXNN(chip8 *c, uint16_t X, uint16_t NN);
 void op_DXYN(chip8 *c, uint16_t X, uint16_t Y, uint16_t N);
 void op_EX9E(chip8 *c, uint16_t X);
 void op_EXA1(chip8 *c, uint16_t X);
+void op_FX07(chip8 *c, uint16_t X);
+void op_FX15(chip8 *c, uint16_t X);
+void op_FX18(chip8 *c, uint16_t X);
