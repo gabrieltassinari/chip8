@@ -112,6 +112,15 @@ void decode(chip8 *c, uint16_t opcode)
 		case 0x0018:
 			op_FX18(c, X);
 			return;
+		case 0x001E:
+			op_FX1E(c, X);
+			return;
+		case 0x000A:
+			op_FX0A(c, X);
+			return;
+		case 0x0029:
+			op_FX29(c, X);
+			return;
 		}
 	default:
 		printf("ERROR: Opcode %#x not implemented.\n", opcode);
@@ -321,4 +330,75 @@ void op_FX15(chip8 *c, uint16_t X)
 void op_FX18(chip8 *c, uint16_t X)
 {
 	c->ST = c->V[X];
+}
+
+void op_FX1E(chip8 *c, uint16_t X)
+{
+	c->I += c->V[X];
+}
+
+void op_FX0A(chip8 *c, uint16_t X)
+{
+	int key = GetKeyPressed();
+
+	switch (key) {
+	case KEY_ONE:
+		c->V[X] = 0x00;
+		break;
+	case KEY_TWO:
+		c->V[X] = 0x01;
+		break;
+	case KEY_THREE:
+		c->V[X] = 0x02;
+		break;
+	case KEY_C:
+		c->V[X] = 0x03;
+		break;
+	case KEY_FOUR:
+		c->V[X] = 0x04;
+		break;
+	case KEY_FIVE:
+		c->V[X] = 0x05;
+		break;
+	case KEY_SIX:
+		c->V[X] = 0x06;
+		break;
+	case KEY_D:
+		c->V[X] = 0x07;
+		break;
+	case KEY_SEVEN:
+		c->V[X] = 0x08;
+		break;
+	case KEY_EIGHT:
+		c->V[X] = 0x09;
+		break;
+	case KEY_NINE:
+		c->V[X] = 0x0a;
+		break;
+	case KEY_E:
+		c->V[X] = 0x0b;
+		break;
+	case KEY_A:
+		c->V[X] = 0x0c;
+		break;
+	case KEY_ZERO:
+		c->V[X] = 0x0d;
+		break;
+	case KEY_B:
+		c->V[X] = 0x0e;
+		break;
+	case KEY_F:
+		c->V[X] = 0x0f;
+		break;
+	default:
+		c->PC -= 2;
+	}
+}
+
+void op_FX29(chip8 *c, uint16_t X)
+{
+	if (c->cosmac_vip)
+		c->I = c->V[X] >> 4;
+	else
+		c->I = c->V[X];
 }
