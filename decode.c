@@ -121,6 +121,15 @@ void decode(chip8 *c, uint16_t opcode)
 		case 0x0029:
 			op_FX29(c, X);
 			return;
+		case 0x0033:
+			op_FX33(c, X);
+			return;
+		case 0x0055:
+			op_FX55(c, X);
+			return;
+		case 0x0065:
+			op_FX65(c, X);
+			return;
 		}
 	default:
 		printf("ERROR: Opcode %#x not implemented.\n", opcode);
@@ -401,4 +410,28 @@ void op_FX29(chip8 *c, uint16_t X)
 		c->I = c->V[X] >> 4;
 	else
 		c->I = c->V[X];
+}
+
+void op_FX33(chip8 *c, uint16_t X)
+{
+	c->mem[c->I] = c->V[X] / 100;
+	c->mem[c->I+1] = (c->V[X] / 10) % 10;
+	c->mem[c->I+2] = c->V[X] % 10;
+}
+
+void op_FX55(chip8 *c, uint16_t X)
+{
+	if (X == 0) {
+		c->mem[c->I] = c->V[0];
+		return;
+	}
+
+	for (int i = 0; i <= X; i++)
+		c->mem[c->I+i] = c->V[i];
+}
+
+void op_FX65(chip8 *c, uint16_t X)
+{
+	for (int i = 0; i <= X; i++)
+		c->V[i] = c->mem[c->I+i];
 }

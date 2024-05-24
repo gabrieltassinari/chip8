@@ -70,7 +70,6 @@ void op_FX18(chip8 *c, uint16_t X);
 void op_FX1E(chip8 *c, uint16_t X);
 void op_FX0A(chip8 *c, uint16_t X);
 void op_FX29(chip8 *c, uint16_t X);
-// TODO: Implement.
 void op_FX33(chip8 *c, uint16_t X);
 void op_FX55(chip8 *c, uint16_t X);
 void op_FX65(chip8 *c, uint16_t X);
