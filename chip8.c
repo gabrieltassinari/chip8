@@ -42,10 +42,10 @@ int load_rom(chip8 *c, const char *path)
 	};
 
 	uint8_t keypad[16] = {
-		KEY_ONE, KEY_TWO, KEY_THREE, KEY_C,
-		KEY_FOUR, KEY_FIVE, KEY_SIX, KEY_D,
-		KEY_SEVEN, KEY_EIGHT, KEY_NINE, KEY_E,
-		KEY_A, KEY_ZERO, KEY_B, KEY_F
+		KEY_ZERO, KEY_ONE, KEY_TWO, KEY_THREE,
+		KEY_FOUR, KEY_FIVE, KEY_SIX, KEY_SEVEN,
+		KEY_EIGHT, KEY_NINE, KEY_A, KEY_B,
+		KEY_C, KEY_D, KEY_E, KEY_F
 	};
 
 	memcpy(c->mem, font, 80);

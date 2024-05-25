@@ -15,7 +15,6 @@ void decode(chip8 *c, uint16_t opcode)
 	NN = (opcode & 0x00FF);
 	NNN = (X << 8) | NN;
 
-
 	switch (opcode & 0xF000) {
 	case 0x0000:
 		switch (opcode & 0x00FF) {
@@ -316,13 +315,13 @@ void op_DXYN(chip8 *c, uint16_t X, uint16_t Y, uint16_t N)
 
 void op_EX9E(chip8 *c, uint16_t X)
 {
-	if (IsKeyPressed(c->keypad[c->V[X]]))
+	if (IsKeyDown(c->keypad[c->V[X]]))
 		c->PC += 2;
 }
 
 void op_EXA1(chip8 *c, uint16_t X)
 {
-	if (!IsKeyPressed(c->keypad[c->V[X]]))
+	if (!IsKeyDown(c->keypad[c->V[X]]))
 		c->PC += 2;
 }
 

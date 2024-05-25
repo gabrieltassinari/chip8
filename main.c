@@ -23,12 +23,15 @@ int main() {
 		// Fetch
 		opcode = fetch(c);
 
-		BeginDrawing();
+		for (int i = 0; i < 11; i++) {
+			opcode = fetch(c);
+			decode(c, opcode);
+		}
 
 		ClearBackground(BLACK);
 
-		// Decode/Execute
-		decode(c, opcode);
+		BeginDrawing();
+		ClearBackground(BLACK);
 
 		// Draw tiles in screen
 		draw_scr(c);
