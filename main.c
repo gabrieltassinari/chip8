@@ -1,42 +1,34 @@
-#include <time.h>
-#include <stdlib.h>
 #include <raylib.h>
+#include <stdlib.h>
 
 #include "chip8.h"
 
-int main() {
+int main(int argc, char **argv) {
 	uint16_t opcode;
 	chip8 *c;
 
 	c = malloc(sizeof (chip8));
 
-	srand(time(NULL));
-
-	// Load ROM
-	load_rom(c, "./roms/ibm.ch8");
+	init_chip8(c, argv[1]);
 
 	// Raylib
 	InitWindow(WIDTH*10, HEIGHT*10, "Chip-8!");
-	SetTargetFPS(2);
+	SetTargetFPS(60);
 
 	while (!WindowShouldClose()) {
-		// Fetch
-		opcode = fetch(c);
-
+		// Emulate Chip-8 CPU
 		for (int i = 0; i < 11; i++) {
 			opcode = fetch(c);
 			decode(c, opcode);
 		}
 
-		ClearBackground(BLACK);
-
-		BeginDrawing();
-		ClearBackground(BLACK);
-
 		// Draw tiles in screen
-		draw_scr(c);
-
+		BeginDrawing();
+			ClearBackground(BLACK);
+			draw_scr(c);
 		EndDrawing();
 	}
+
+	free(c);
 	CloseWindow();
 }

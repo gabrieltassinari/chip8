@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <raylib.h>
 #include <string.h>
+#include <time.h>
 
 #include "chip8.h"
 
@@ -17,11 +18,8 @@ void draw_scr(chip8 *c)
 	}
 }
 
-int load_rom(chip8 *c, const char *path)
+int init_chip8(chip8 *c, const char *path)
 {
-	FILE *fp;
-	int file_size;
-
 	uint8_t font[80] = {
 		0xFA, 0xBE, 0x90, 0x90, 0xF0, // 0
 		0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -48,23 +46,32 @@ int load_rom(chip8 *c, const char *path)
 		KEY_C, KEY_D, KEY_E, KEY_F
 	};
 
+	srand(time(NULL));
+
+	// Map ROM/font to memory
 	memcpy(c->mem, font, 80);
 	memcpy(c->keypad, keypad, 16);
 
-	// Map ROM/font to memory
+	return load_rom(c, path);
+}
+
+int load_rom(chip8 *c, const char *path)
+{
+	FILE *fp;
+	int file_size;
+
 	fp = fopen(path, "r+");
+
+	if (fp == NULL) {
+		printf("ERROR: ROM not found.\n");
+		exit(1);
+	}
 
 	// Get ROM size
 	fseek(fp, 0L, SEEK_END);
 	file_size = ftell(fp);
 	rewind(fp);
 
-	if (fp == NULL) {
-		printf("ERROR: ROM not found.");
-		exit(1);
-	}
-
-	// TODO: Fix hardcoded length of opcodes
 	for (int i = 0; i < file_size; i++)
 		c->mem[512+i] = getc(fp);
 	c->PC = 512;

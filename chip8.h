@@ -34,9 +34,10 @@ typedef struct chip8 {
 } chip8;
 
 uint16_t fetch(chip8 *c);
+void draw_scr(chip8 *c);
 void decode(chip8 *c, uint16_t opcode);
 int load_rom(chip8 *c, const char *path);
-void draw_scr(chip8 *c);
+int init_chip8(chip8 *c, const char *path);
 
 // Opcodes
 void op_00E0(chip8 *c);
